@@ -1,0 +1,25 @@
+---
+# Test of Multiplay
+- name: First Play to publish a website
+  hosts: win2.example.com
+  gather_facts: false
+  tasks:
+    - name: Install Web Service
+      win_feature:
+        name: Web-Server
+        state: present
+    - name: Start Web Service
+      win_service:
+        name: W3Svc
+        state: started
+    - name: Publish DO417 Website
+      win_copy:
+        content: This is DO417 Test Website 
+        dest: c:\Inetpub\wwwroot\index.html
+- name: Second Play Verify website
+  hosts: win1.example.com
+  gather_facts: false
+  tasks:
+    - name: Verify if website is working
+      win_uri:
+        url: http://win2.example.com
