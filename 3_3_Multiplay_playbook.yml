@@ -5,15 +5,15 @@
   gather_facts: false
   tasks:
     - name: Install Web Service
-      win_feature:
+      ansible.windows.win_feature:
         name: Web-Server
         state: present
     - name: Start Web Service
-      win_service:
+      ansible.windows.win_service:
         name: W3Svc
         state: started
     - name: Publish DO417 Website
-      win_copy:
+      ansible.windows.win_copy:
         content: This is DO417 Test Website 
         dest: c:\Inetpub\wwwroot\index.html
 - name: Second Play Verify website
@@ -21,5 +21,5 @@
   gather_facts: false
   tasks:
     - name: Verify if website is working
-      win_uri:
+      ansible.windows.win_uri:
         url: http://win2.example.com
