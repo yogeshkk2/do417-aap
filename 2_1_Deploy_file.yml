@@ -1,3 +1,9 @@
 ---
-- name: Demo of new AAP 417 
-  hosts: win1.lab.example.com
+- name: Demo of DO417 AAP2.x
+  hosts: win1.example.com
+  tasks:
+
+  - name: A single 'test.txt' text file is created
+    ansible.windows.win_copy:
+      content: 'Helloworld'
+      dest: C:\Users\devops\Desktop\test.txt
