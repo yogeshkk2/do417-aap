@@ -1,0 +1,3 @@
+---
+- name: Demo of new AAP 417 
+  hosts: win1.lab.example.com
