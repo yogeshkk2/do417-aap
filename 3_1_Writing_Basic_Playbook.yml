@@ -1,0 +1,16 @@
+---
+- name: Deploy IIS Service on Windows Host
+  hosts: win1.example.com
+  tasks:
+    - name: Deploy the IIS Feature 
+      ansible.windows.win_feature:
+        name: Web-Server
+        state: present
+    - name: Service must be started
+      ansible.windows.win_service:
+        name: W3Svc
+        state: started
+    - name: Need to have a landing page
+      ansible.windows.win_copy:
+        content: "Hello World!"
+        dest: C:\Inetpub\wwwroot\index.html
