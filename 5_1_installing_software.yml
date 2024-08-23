@@ -1,0 +1,27 @@
+---
+- name: Install software Demonstration
+  hosts: win2.example.com
+  gather_facts: false
+  tasks:
+    - name: Install DHCP Server
+      ansible.windows.win_feature: 
+        name: DHCP
+        state: present
+      
+    - name: Query for updates from Microsoft Server
+      ansible.windows.win_updates:
+        category_names: CriticalUpdates
+        state: searched
+        log_path: C:\Windows\Temp\ansible_critical_update.txt
+
+    - name: Install specific updates
+      ansible.windows.win_updates:
+        category_name:
+          - updates
+        accept_list:
+          - KB5038282
+      register: updates_status
+
+    - name: Reboot the ServerBox if required
+      ansible.windows.win_reboot:
+      when: updates_status.reboot_required
