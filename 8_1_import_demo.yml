@@ -1,0 +1,21 @@
+---
+- name: IIS Server Deployment
+  hosts: win1.example.com
+  gather_facts: false
+
+  tasks:
+    - name: Include the task to install packages
+      ansible.builtin.import_tasks: tasks/task1.yml
+      vars:
+        web_packages:
+          - Web-Server
+
+    - name: Import the task2 
+      ansible.builtin.import_tasks: tasks/task2.yml
+      vars:
+        path: C:\Inetpub\wwwroot\projects
+
+- name: Import Play for testing
+  ansible.builtin.import_playbook: tasks/testing.yml
+  vars:
+    weburl: 'http://win1.example.com'

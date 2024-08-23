@@ -1,0 +1,7 @@
+---
+- name: Web Package Installed
+  ansible.windows.win_feature:
+    name: "{{ web_packages }}"
+    include_management_tools: True
+    state: present
+  register: output1

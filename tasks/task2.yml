@@ -1,0 +1,5 @@
+---
+- name: Create Index 
+  ansible.windows.win_copy:
+    src: 'files/index.html'
+    dest: '{{ path }}\index.html'

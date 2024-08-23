@@ -1,0 +1,11 @@
+---
+- name: Testing
+  hosts: win2.example.com
+  gather_facts: false
+
+  tasks:
+
+    - name: Verify Web 
+      win_uri:
+        url: "{{ weburl }}"
+        status_code: 200
