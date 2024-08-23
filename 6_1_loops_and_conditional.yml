@@ -7,8 +7,7 @@
       - DHCP
       - Web-Server
   tasks:
-     
-# #### Loop Example ####
+#### Loop Example ####
     - name: Starting multiple services with loop
       ansible.windows.win_service:
         name: "{{ item }}"
@@ -16,8 +15,7 @@
       loop:
         - W3Svc
         - spooler
-
-# # #### Conditional Demo ####
+#### Conditional Demo ####
     - name: Install list of packages if condition is met
       ansible.windows.win_feature:
         name: "{{ item }}"
