@@ -1,0 +1,29 @@
+---
+- name: Loop and conditional Demo
+  hosts: win2.example.com
+  gather_facts: true
+  vars:
+    packages:
+      - DHCP
+  tasks:
+     
+# #### Loop Example ####
+    - name: Starting multiple services with loop
+      ansible.windows.win_service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - W3Svc
+        - spooler
+
+# # #### Conditional Demo ####
+    - name: Install list of packages if condition is met
+      ansible.windows.win_feature:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - "{{ packages }}"
+      when: 
+        - ansible_facts['memtotal_mb'] > 2048
+        - ansible_facts['architecture'] == "64-bit"
+        - ansible_facts['processor_vcpus'] >= 2
