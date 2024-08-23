@@ -5,7 +5,7 @@
   gather_facts: true
   tasks:
   
-    - name: Publish DO417 Facts Website
+    - name: Publish facts on a file
       ansible.windows.win_copy:
         content: |
           OS: {{ ansible_facts['os_name'] }}
