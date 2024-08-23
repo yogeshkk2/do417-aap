@@ -1,0 +1,27 @@
+---
+- name: Demo of Block
+  hosts: win2.example.com
+  gather_facts: false
+  tasks:
+   - name: Block, Rescue and Always
+     block: 
+      - name: Install a package of WebServer
+        ansible.windows.win_feature: 
+          name: Web-wrong-name
+          state: present
+        register: result1
+      - name: 
+        debug:
+          var: result1
+    # If block fails ansible will run rescue # 
+     rescue: 
+      - name: Install DHCP Server - Rescue
+        ansible.windows.win_feature:
+          name: DHCP
+          state: present
+
+     always:
+      - name: Restart a service - Always
+        ansible.windows.win_service:
+          name: Spooler
+          state: restarted

@@ -1,0 +1,40 @@
+---
+- name: Handling Task Failure Demo
+  hosts: win2.example.com
+  gather_facts: no
+  force_handlers: yes
+  tasks:
+    - name: Fail the Playbook if variable not defined
+      fail:
+        msg: Playbook Failed because variable not defined
+      when: variable1 is not defined 
+ #It fails the task if the Varible is not defined #      
+    - name: DHCP
+      win_feature:
+        name: DHCP
+        state: absent
+      notify:
+        - restart service
+    - name: Install notafeature with sub features and management tools
+      win_feature:
+        name: wrongpackage
+        state: present
+        include_sub_features: yes
+        include_management_tools: yes
+      register: update_result
+      #ignore_errors: true
+    - name: Display result
+      debug:
+        var: update_result
+    - name: Restart a service of Spooler
+      win_service:
+        name: Spooler
+        state: restarted
+
+# ignore_errors: true | Playbook continues to execute even if the task fails |
+  handlers:
+    - name: restart service
+      win_service:
+        name: W3Svc
+        state: restarted
+# Generally if the task fails the Handler does not run even if its notified
