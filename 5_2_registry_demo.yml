@@ -1,0 +1,19 @@
+---
+- name: Demo of Registry Edit 
+  hosts: win2.example.com
+  gather_facts: false
+  tasks:
+    - name: Add new registry entry for HelloWorld
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\RedHat
+        name: Class
+        data: DO417
+        type: string
+    - name: Obtain information about a registry key
+      ansible.windows.win_reg_stat:
+        path: HKCU:\Software\RedHat
+        name: Class
+      register: result
+    - name: View Info
+      debug:
+        var: result
