@@ -1,0 +1,19 @@
+---
+- name: Demo of Jinja2 Template
+  gather_facts: true
+  hosts: 
+    - win2.example.com
+    - win1.example.com
+  tasks:
+    - name: Install a webserver
+      ansible.windows.win_feature:
+        name: Web-Server
+        state: present
+    - name: Start web service
+      ansible.windows.win_service:
+        name: W3Svc
+        state: started
+    - name: Place Index file in webserver
+      ansible.windows.win_template: 
+        src: templates/index.j2
+        dest: C:\Inetpub\wwwroot\index.html

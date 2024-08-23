@@ -1,0 +1,17 @@
+<!doctype html>
+<!-- {{ ansible_managed }} -->
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Info</title>
+</head>
+<body>
+    <h1>{{ ansible_facts['hostname'] }}</h1>
+
+    <ul>
+        <li>IP: {{ ansible_facts['ip_addresses'][0] }}</li>
+        <li>OS: {{ ansible_facts['os_name'] }}</li>
+    </ul>
+</body>
+</html>
