@@ -13,7 +13,7 @@
     - name: Import the task2 
       ansible.builtin.import_tasks: tasks/task2.yml
       vars:
-        path: C:\Inetpub\wwwroot\projects
+        path: C:\Inetpub\wwwroot
 
 - name: Import Play for testing
   ansible.builtin.import_playbook: tasks/testing.yml
