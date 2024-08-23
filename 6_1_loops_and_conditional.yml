@@ -5,6 +5,7 @@
   vars:
     packages:
       - DHCP
+      - Web-Server
   tasks:
      
 # #### Loop Example ####
