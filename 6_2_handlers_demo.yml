@@ -1,0 +1,20 @@
+---
+- name: Demonstration of Handlers
+  hosts: win2.example.com
+  gather_facts: false
+  tasks:
+    - name: Remove DHCP Service
+      ansible.windows.win_feature:
+        name: DHCP
+        state: absent
+      notify:
+        - printing message
+        - restart spooler
+  handlers:
+    - name: printing message
+      debug:
+        msg: Removal is done, rebooting is not required
+    - name: restart spooler
+      win_service:
+        name: spooler
+        state: restarted
