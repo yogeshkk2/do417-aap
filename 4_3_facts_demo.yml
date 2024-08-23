@@ -1,0 +1,30 @@
+---
+# Test of Facts
+- name: Facts Demo
+  hosts: win2.example.com
+  tasks:
+    - name: Install Web Service
+      ansible.windows.win_feature:
+        name: Web-Server
+        state: present
+
+    - name: Start Web Service
+      ansible.windows.win_service:
+        name: W3Svc
+        state: started
+
+    - name: Collect Facts for Product
+      community.windows.win_product_facts:
+
+    - name: Collect Facts for Disk
+      win_disk_facts:
+
+    - name: Publish DO417 Facts Website
+      ansible.windows.win_copy:
+        content: |
+          OS: {{ ansible_facts['os_name'] }}
+          Machine ID: {{ ansible_facts['machine_id'] }}
+          Last Boot: {{ ansible_facts['lastboot'] }}
+          License Status: {{ ansible_facts['os_license_status'] }}
+          Disk Size: {{ ansible_facts['disks'][0]['size'] }}
+        dest: c:\Inetpub\wwwroot\index.html
