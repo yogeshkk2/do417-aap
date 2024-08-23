@@ -10,7 +10,8 @@
       
     - name: Query for updates from Microsoft Server
       ansible.windows.win_updates:
-        category_names: CriticalUpdates
+        category_names: 
+          - CriticalUpdates
         state: searched
         log_path: C:\Windows\Temp\ansible_critical_update.txt
 
