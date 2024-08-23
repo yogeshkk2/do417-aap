@@ -7,16 +7,6 @@
       ansible.windows.win_feature: 
         name: DHCP
         state: present
-    
-    - name: Install through chocolatey
-      chocolatey.chocolatey.win_chocolatey:
-        name: chocolatey
-        state: present
-
-    - name: Install through chocolatey
-      chocolatey.chocolatey.win_chocolatey:
-        name: Wireshark
-        state: present
 
     - name: Query Microsoft update servers
       ansible.windows.win_updates:
