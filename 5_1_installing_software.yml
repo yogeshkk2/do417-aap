@@ -7,11 +7,10 @@
       ansible.windows.win_feature: 
         name: DHCP
         state: present
-      
-    - name: Query for updates from Microsoft Server
+        
+    - name: Query Microsoft update servers
       ansible.windows.win_updates:
-        category_names: 
-          - CriticalUpdates
+        category_names: updates
         state: searched
         log_path: C:\Windows\Temp\ansible_critical_update.txt
 
