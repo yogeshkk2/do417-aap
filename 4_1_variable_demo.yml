@@ -1,0 +1,21 @@
+---
+# Test of Multiplay
+- name: First Play to publish a website
+  hosts: win2.example.com
+  gather_facts: false
+  vars:
+    package: Web-Server
+    service: W3Svc
+  tasks:
+    - name: Install Web Service
+      ansible.windows.win_feature:
+        name: "{{ package }}"
+        state: present
+    - name: Start Web Service
+      ansible.windows.win_service:
+        name: "{{ service }}"
+        state: started
+    - name: Publish DO417 Website
+      ansible.windows.win_copy:
+        content: This is DO417 Test Website 
+        dest: c:\Inetpub\wwwroot\index.html
