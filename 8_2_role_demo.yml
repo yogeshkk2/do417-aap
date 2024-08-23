@@ -1,0 +1,16 @@
+---
+- name: IIS Server Deployment
+  hosts: win2.example.com
+  gather_facts: false
+  pre_tasks:
+    - debug:
+        msg: "This is the pre_tasks job that ran first"
+
+  roles:
+    - role: iis_role
+      site_title: RedHat Ansible Test website
+
+  post_tasks:
+    - name: Message of Post tasks
+      debug:
+        msg: "This is Post Task message that ran last"
