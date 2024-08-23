@@ -16,7 +16,7 @@
 
     - name: Install specific updates
       ansible.windows.win_updates:
-        category_name:
+        category_names:
           - updates
         accept_list:
           - KB5038282
