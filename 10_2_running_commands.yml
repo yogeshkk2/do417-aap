@@ -4,10 +4,10 @@
   gather_facts: false
   tasks:
     - name: Run the WBAdmin command
-      ansible.windows.win_command: wbadmin -backupTarget:C:\backup\
-      args:
-        chdir: C:\Windows\Temp   # Folder from where it runs #
-        creates: C:\backup\
+      ansible.windows.win_command: wbadmin start backup -backupTarget:C:\Windows\Temp\TARGET -include:C:\Windows\Temp\BACKUP -allCritical -Quiet
+      # args:
+      #   chdir: C:\Windows\Temp   # Folder from where it runs #
+      #   creates: C:\backup\
 
     - name: Test the availability of a server
       ansible.windows.win_shell: |
