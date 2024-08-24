@@ -3,5 +3,6 @@
   hosts: win1.example.com
   gather_facts: false
   tasks:
-    import_role:
-      name: win-iis
+    - name: Install the software of 7zip
+      import_role:
+        name: ansible-7zip
