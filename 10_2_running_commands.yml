@@ -8,11 +8,15 @@
         src: files/pingHosts.ps1
         dest: C:\Windows\Temp\ 
 
-    - name: Test 
+    - name: Running Powershell scripts
       ansible.windows.win_powershell:
         script: |
           C:\Windows\Temp\pingHosts.ps1
-
+      register: Write-Output
+  
+    - name: Display results
+      debug:
+        var: Write-Output
 
     # - name: Run the WBAdmin command
     #   ansible.windows.win_shell: wbadmin start backup -backupTarget:C:\TARGET -include:C:\BACKUP -allCritical -Quiet
@@ -30,11 +34,11 @@
         src: files/PsExec.exe
         dest: C:\Windows\Temp\
     
-    # - name: Test the availability of a server
+    # - name: Running a command over the server using psexec
     #   ansible.windows.win_shell: >
     #     psexec \\win1 -u devops -p D3vOps123!@ iisreset /noforce
         
-    - name: Sample Script Run
+    - name: Running a script on a remote server
       ansible.builtin.script: files/sample.ps1
       args:
         creates: C:\Windows\Temp\sample.log
