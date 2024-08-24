@@ -16,16 +16,16 @@
   
     - name: Display results
       debug:
-        var: output.output
+        var: output.stdout_lines
 
     - name: Running command module
       ansible.windows.win_command: |
         hostname
-      register: display
+      register: command_output
   
     - name: Display output
       debug:
-        var: display.output
+        var: command_output.stdout_lines
 
 
     # - name: Run the WBAdmin command
