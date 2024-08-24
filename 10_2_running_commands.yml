@@ -8,11 +8,11 @@
         src: files/PsExec.exe
         dest: C:\Windows\Temp\
 
-    - name: Run the WBAdmin command
-      ansible.windows.win_shell: wbadmin start backup -backupTarget:C:\Windows\Temp\TARGET -include:C:\Windows\Temp\BACKUP -allCritical -Quiet
-      # args:
-      #   chdir: C:\Windows\Temp   # Folder from where it runs #
-      #   creates: C:\backup\
+    # - name: Run the WBAdmin command
+    #   ansible.windows.win_shell: wbadmin start backup -backupTarget:C:\Windows\Temp\TARGET -include:C:\Windows\Temp\BACKUP -allCritical -Quiet
+    #   # args:
+    #   #   chdir: C:\Windows\Temp   # Folder from where it runs #
+    #   #   creates: C:\backup\
 
     - name: Test the availability of a server
       ansible.windows.win_shell: |
