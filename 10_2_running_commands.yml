@@ -9,7 +9,7 @@
         dest: C:\Windows\Temp\
 
     - name: Run the WBAdmin command
-      ansible.windows.win_command: C:\Windows\Temp\pingHost.ps1 >> C:\Windows\Temp\pingHost.txt
+      ansible.windows.win_shell: C:\Windows\Temp\pingHost.ps1 >> C:\Windows\Temp\pingHost.txt
       args: 
         chdir: C:\Windows\Temp
         creates: C:\Windows\Temp\pingHost.txt
