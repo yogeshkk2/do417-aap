@@ -16,7 +16,17 @@
   
     - name: Display results
       debug:
-        var: output
+        var: output.output
+
+    - name: Running command module
+      ansible.windows.win_command: |
+        hostname
+      register: display
+  
+    - name: Display output
+      debug:
+        var: display.output
+
 
     # - name: Run the WBAdmin command
     #   ansible.windows.win_shell: wbadmin start backup -backupTarget:C:\TARGET -include:C:\BACKUP -allCritical -Quiet
