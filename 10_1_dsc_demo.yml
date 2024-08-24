@@ -22,7 +22,7 @@
 
     - name: Transfer Zip File to Host 
       ansible.windows.win_copy:
-        src: files/HelloWorld.zip
+        src: files/Helloworld.zip
         dest: C:\Windows\Temp\RedHat\HelloWorld.zip
     
     - name: Extract the Zip File to a Folder
