@@ -1,0 +1,1 @@
+Test-Connection -TargetName windc.example.com,win1.example.com,win2.example.com -IPv4 -Count 2

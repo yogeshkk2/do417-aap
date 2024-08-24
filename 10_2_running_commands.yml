@@ -1,0 +1,49 @@
+---
+- name: Demo of Running arbitrary commands
+  hosts: win2.example.com
+  gather_facts: false
+  tasks:
+    - name: Run the WBAdmin command
+      ansible.windows.win_command: wbadmin -backupTarget:C:\backup\
+      args:
+        chdir: C:\Windows\Temp   # Folder from where it runs #
+        creates: C:\backup\
+
+    - name: Test the availability of a server
+      ansible.windows.win_shell: |
+        if (Test-Connection -ComputerName "win1.example.com" -Count 2 -Quiet ) {
+        Write-Output "[OK]"
+        } else {
+        Write-Output "[FAIL]"
+        }
+
+    - name: Copy a PsExec keeping the filename
+      ansible.windows.win_copy:
+        src: files/PsExec.exe
+        dest: C:\Windows\Temp\
+    
+    - name: Test the availability of a server
+      ansible.windows.win_shell: >
+        psexec \\win1 -u devops -p D3vOps123!@ iisreset /noforce
+        
+    - name: Sample Script Run
+      ansible.builtin.script: files/sample.ps1
+      args:
+        creates: C:\Windows\Temp\sample.log
+        executable: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+
+    - name: Copy a powershell script to folder
+      ansible.windows.win_copy:
+        src: files/pingHosts.ps1
+        dest: C:\Windows\Temp\ 
+
+    - name: Current repositories are unregistered
+      ansible.windows.win_shell: >
+        robocopy C:\Windows\System32\drivers\etc
+        /MIR /XX 
+        /log:C:\Windows\Temp\result.log
+      args:
+        creates: C:\Windows\Temp\result.log
+      register: backup_result
+      failed_when: backup_result['rc'] != 0
+
