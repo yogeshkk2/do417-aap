@@ -12,7 +12,7 @@
     - name: Add new user to the development machine and assign the appropriate groups.
       ansible.windows.win_user:
         name: yoda
-        password: "{{ passwd }}"
+        password: StuD3nt123!@
         state: present
         groups:
         - Users
