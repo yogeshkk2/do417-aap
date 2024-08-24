@@ -27,9 +27,9 @@
         src: files/PsExec.exe
         dest: C:\Windows\Temp\
     
-    - name: Test the availability of a server
-      ansible.windows.win_shell: >
-        psexec \\win1 -u devops -p D3vOps123!@ iisreset /noforce
+    # - name: Test the availability of a server
+    #   ansible.windows.win_shell: >
+    #     psexec \\win1 -u devops -p D3vOps123!@ iisreset /noforce
         
     - name: Sample Script Run
       ansible.builtin.script: files/sample.ps1
