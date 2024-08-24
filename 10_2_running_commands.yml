@@ -12,11 +12,11 @@
       ansible.windows.win_powershell:
         script: |
           C:\Windows\Temp\pingHosts.ps1
-      register: Write-Output
+      register: output
   
     - name: Display results
       debug:
-        var: Write-Output
+        var: output
 
     # - name: Run the WBAdmin command
     #   ansible.windows.win_shell: wbadmin start backup -backupTarget:C:\TARGET -include:C:\BACKUP -allCritical -Quiet
