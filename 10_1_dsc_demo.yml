@@ -1,0 +1,33 @@
+---
+- name: DSC Demonstration
+  hosts: win1.example.com
+  gather_facts: false
+  tasks:       
+    - name: Folder Creation
+      ansible.windows.win_dsc:
+        resource_name: File
+        DestinationPath: C:\Windows\Temp\RedHat
+        Ensure: Present
+        Type: Directory
+
+    - name: New Text File
+      ansible.windows.win_dsc:
+        resource_name: File
+        DestinationPath: C:\Windows\Temp\RedHat\Ansible.txt
+        Contents: |
+            HelloWorld
+            Ansible Works.
+        Ensure: Present
+        Type: File
+
+    - name: Transfer Zip File to Host 
+      ansible.windows.win_copy:
+        src: files/HelloWorld.zip
+        dest: C:\Windows\Temp\RedHat\HelloWorld.zip
+    
+    - name: Extract the Zip File to a Folder
+      ansible.windows.win_dsc:
+        resource_name: Archive
+        Destination: C:\Windows\Temp\RedHat\Extracted
+        Path: C:\Windows\Temp\RedHat\HelloWorld.zip
+        Ensure: Present
