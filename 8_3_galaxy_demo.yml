@@ -3,10 +3,5 @@
   hosts: win1.example.com
   gather_facts: false
   tasks:
-    - name: Deploy IIS  
-      vars: 
-        iis_site_name: 'My DO417 Site'
-        iis_bindings: 
-          - port: 80
-      import_role:
-        name: win-iis
+    import_role:
+      name: win-iis
