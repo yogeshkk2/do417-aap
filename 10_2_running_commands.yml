@@ -3,16 +3,19 @@
   hosts: win2.example.com
   gather_facts: false
   tasks:
-    - name: Copy a file keeping the filename
+    - name: Copy a powershell script to folder
       ansible.windows.win_copy:
-        src: files/PsExec.exe
-        dest: C:\Windows\Temp\
+        src: files/pingHosts.ps1
+        dest: C:\Windows\Temp\ 
+
+    - name: Test 
+      ansible.windows.win_powershell:
+        script: |
+          C:\Windows\Temp\pingHosts.ps1
+
 
     # - name: Run the WBAdmin command
-    #   ansible.windows.win_shell: wbadmin start backup -backupTarget:C:\Windows\Temp\TARGET -include:C:\Windows\Temp\BACKUP -allCritical -Quiet
-    #   # args:
-    #   #   chdir: C:\Windows\Temp   # Folder from where it runs #
-    #   #   creates: C:\backup\
+    #   ansible.windows.win_shell: wbadmin start backup -backupTarget:C:\TARGET -include:C:\BACKUP -allCritical -Quiet
 
     - name: Test the availability of a server
       ansible.windows.win_shell: |
@@ -37,18 +40,6 @@
         creates: C:\Windows\Temp\sample.log
         executable: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
 
-    - name: Copy a powershell script to folder
-      ansible.windows.win_copy:
-        src: files/pingHosts.ps1
-        dest: C:\Windows\Temp\ 
 
-    - name: Current repositories are unregistered
-      ansible.windows.win_shell: >
-        robocopy C:\Windows\System32\drivers\etc
-        /MIR /XX 
-        /log:C:\Windows\Temp\result.log
-      args:
-        creates: C:\Windows\Temp\result.log
-      register: backup_result
-      failed_when: backup_result['rc'] != 0
+
 
