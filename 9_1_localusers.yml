@@ -1,0 +1,34 @@
+---
+- name: Demo of Local user management
+  hosts: win2.example.com
+  gather_facts: false
+  tasks: 
+    - name: Create a new local group.
+      ansible.windows.win_group:
+        name: devgroup
+        description: Developers Group
+        state: present
+
+    - name: Add new user to the development machine and assign the appropriate groups.
+      ansible.windows.win_user:
+        name: yoda
+        password: "{{ passwd }}"
+        state: present
+        groups:
+        - Users
+        - devgroup
+        groups_action: add  
+        # User is addded to each group where not already a member
+      register: output
+      
+    - debug:
+        var: output
+
+    - name: Add users to Local group
+      ansible.windows.win_group_membership:
+        name: devgroup
+        members:
+          - devops 
+          - NT AUTHORITY\SYSTEM
+        state: present
+      # Adds or removes local, service and domain users
