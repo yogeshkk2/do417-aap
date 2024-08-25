@@ -1,0 +1,48 @@
+---
+- name: Manage local Disk storage
+  hosts: win2.example.com
+  tasks:
+    - name: Get all Disk Facts 
+      community.windows.win_disk_facts:
+
+    - name: Get fact of Second Disk
+      ansible.builtin.debug:
+        var: ansible_facts['disks'][1]['size'] | filesizeformat
+
+    - name: Initialize second disk
+      community.windows.win_initialize_disk:
+        disk_number: 1
+
+    - name: Create partition on disk number 2
+      community.windows.win_partition:
+        disk_number: 1
+        drive_letter: F
+        partition_size: -1
+      register: task_part
+
+    - name: Format new partition
+      community.windows.win_format:
+        drive_letter: F
+        file_system: NTFS
+        new_label: data
+        full: true
+      when: task_part['changed']
+
+    - name: Create a Shared Folder
+      ansible.windows.win_file:
+        path: G:\Important\share
+        state: directory
+
+    - name: Create file under shared folder 
+      ansible.windows.win_copy:
+        content: 'RedHat Training'
+        dest: G:\Important\share\DO417.txt
+
+    - name: Folder is shared
+      ansible.windows.win_share:
+        name: share
+        description: RedHat Share 
+        path: G:\Important\share
+        list: yes
+        full: Administrators
+        read: Domain Users
