@@ -12,11 +12,11 @@
       ansible.windows.win_powershell:
         script: |
           C:\Windows\Temp\pingHosts.ps1
-      register: output
+      register: print_cmd_output
   
     - name: Display results
       debug:
-        var: output.stdout_lines
+        var: print_cmd_output.output
 
     - name: Running command module
       ansible.windows.win_command: |
