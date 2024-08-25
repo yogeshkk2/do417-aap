@@ -13,9 +13,7 @@
         - 'config'
         - 'feature'
 
-    - debug:  
-        var: "{{ ansible_chocolatey }}"
-    # - name: Print chocolatey config facts
-    #   ansible.windows.win_copy:
-    #     content: "{{ ansible_chocolatey }}"
-    #     dest: C:\Users\devops\Desktop\chocolatey_info.txt
+    - name: Print chocolatey config facts
+      ansible.windows.win_copy:
+        content: "{{ ansible_chocolatey }}"
+        dest: C:\Users\devops\Desktop\choco-config.txt
