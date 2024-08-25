@@ -1,0 +1,8 @@
+plugin: microsoft.ad.ldap
+server: winad
+port: 389
+auth_protocol: kerberos
+search_base: OU=Servers,DC=example,DC=win2.example.com
+filter: (sAMAccountName=win*)
+groups:
+  windows: true
