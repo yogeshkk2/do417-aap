@@ -1,0 +1,19 @@
+---
+- name: Chocolatey Demo
+  hosts: win1.example.com
+  gather_facts: false
+  tasks:
+    - name: Deploy chocolatey first
+      chocolatey.chocolatey.win_chocolatey:
+        name: chocolatey
+
+    - name: Mine for chocolatey facts on target
+      chocolatey.chocolatey.win_chocolatey_facts:
+        filter:
+        - 'config'
+        - 'feature'
+
+    - name: Print chocolatey config facts
+      ansible.windows.win_copy:
+        content: "{{ ansible_chocolatey }}"
+        dest: C:\Users\devops\Desktop\chocolatey_info.txt
