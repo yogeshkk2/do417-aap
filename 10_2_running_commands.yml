@@ -16,7 +16,7 @@
   
     - name: Display results
       debug:
-        var: print_cmd_output.output.path
+        var: print_cmd_output.output
 
     - name: Running command module
       ansible.windows.win_command: |
