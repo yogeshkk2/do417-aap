@@ -3,7 +3,7 @@
   hosts: win1.example.com
   tasks:
 
-  - name: Print a file on a target host 
+  - name: my description
     ansible.windows.win_copy:
       content: 'This is a Git Demo'
       dest: C:\Users\devops\Desktop\test.txt
