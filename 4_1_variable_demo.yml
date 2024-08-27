@@ -7,11 +7,11 @@
     package: Web-Server
     service: W3Svc
   tasks:
-    - name: Install Web Service
+    - name: Install {{ package }} package 
       ansible.windows.win_feature:
         name: "{{ package }}"
         state: present
-    - name: Start Web Service
+    - name: Start {{ service }} service
       ansible.windows.win_service:
         name: "{{ service }}"
         state: started
