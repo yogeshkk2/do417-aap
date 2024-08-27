@@ -1,0 +1,8 @@
+---
+- name: test of variable
+  hosts: win2.example.com
+  tasks:
+    - name: Install a {{ package }} feature 
+      ansible.windows.win_feature:
+        name: "{{ package }}"
+        state: present
