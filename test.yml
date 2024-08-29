@@ -1,0 +1,7 @@
+---
+- name: test 
+  hosts: win1.example.com
+  tasks: 
+    - name: install ansible-7zip
+      import_role: 
+        name: ansible-7zip
