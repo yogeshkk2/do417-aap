@@ -10,7 +10,8 @@
 #       ansible.windows.win_copy:
 #         content: "This is My First Playbook"
 #         dest: C:\Windows\Temp\Playbook_Demo\demo.txt
-    - set_fact:
+    - name: test
+      set_fact:
         abc: "{{ ansible_facts['os_name'] }}"
     - name: Print a message
       ansible.builtin.debug:
