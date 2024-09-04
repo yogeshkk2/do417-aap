@@ -1,15 +1,18 @@
----
-- name: My First Demo playbook
-  hosts: win2.example.com
-  tasks:
-    - name: Create a folder
-      ansible.windows.win_file:
-        path: C:\Windows\Temp\Playbook_Demo
-        state: directory
-    - name: Create a file 
-      ansible.windows.win_copy:
-        content: "This is My First Playbook"
-        dest: C:\Windows\Temp\Playbook_Demo\demo.txt
+# when: ---
+# - name: My First Demo playbook
+#   hosts: win2.example.com
+#   tasks:
+#     - name: Create a folder
+#       ansible.windows.win_file:
+#         path: C:\Windows\Temp\Playbook_Demo
+#         state: directory
+#     - name: Create a file 
+#       ansible.windows.win_copy:
+#         content: "This is My First Playbook"
+#         dest: C:\Windows\Temp\Playbook_Demo\demo.txt
+    - set_fact:
+        abc: "{{ ansible_facts['os_name'] }}"
     - name: Print a message
       ansible.builtin.debug:
         msg: "Folder and file was successfully created"
+      when: abc | grep 'Server'
