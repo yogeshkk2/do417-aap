@@ -1,7 +1,0 @@
----
-- name: test
-  hosts: win1.example.com
-  tasks:
-    - name: Deploy ROLE through git
-      import_role:
-        name: ansible-7zip
