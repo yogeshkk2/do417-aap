@@ -14,3 +14,6 @@
       ansible.windows.win_service:
         name: "{{ service }}"
         state: started
+      register: capture
+    - debug:
+        var: capture
