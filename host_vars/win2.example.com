@@ -1,1 +1,2 @@
-package: DHCP
+package: Web-Server
+service: W3Svc
