@@ -4,6 +4,7 @@
   hosts: win2.example.com
   vars:
     service: spooler
+    package: DHCP
   gather_facts: false
   tasks:
     - name: Install {{ package }}
