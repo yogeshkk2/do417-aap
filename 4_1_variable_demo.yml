@@ -3,9 +3,6 @@
 - name: First Play to publish a website
   hosts: win2.example.com
   gather_facts: false
-  vars:
-    package: Web-Server
-    service: W3Svc
   tasks:
     - name: Install {{ package }} package 
       ansible.windows.win_feature:
