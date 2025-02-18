@@ -16,3 +16,6 @@
       ansible.windows.win_copy:
         content: This is DO417 Test Website 
         dest: c:\Inetpub\wwwroot\index.html
+      register: output
+    - debug:
+        var: output
