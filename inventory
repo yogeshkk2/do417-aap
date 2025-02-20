@@ -1,2 +1,8 @@
+serverc.lab.example.com
+
 [ad]
-winad.example.com
+servera.lab.example.com
+
+[webservers]
+serverb.lab.example.com
+
