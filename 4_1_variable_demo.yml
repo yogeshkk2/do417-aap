@@ -1,7 +1,7 @@
 ---
 # Test of Multiplay
 - name: First Play to publish a website
-  hosts: win2.example.com
+  hosts: win1.example.com
   gather_facts: false
   tasks:
     - name: Install {{ package }} package 
