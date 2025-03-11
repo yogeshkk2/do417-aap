@@ -14,7 +14,7 @@
         state: started
     - name: Publish DO417 Website
       ansible.windows.win_copy:
-        content: HelloWorld 
+        content: Hello DO417
         dest: c:\Inetpub\wwwroot\index.html
       register: output
     - debug:
