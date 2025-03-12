@@ -25,4 +25,4 @@
       when: 
         - ansible_facts['memtotal_mb'] > 2048
         - ansible_facts['architecture'] == "64-bit"
-        - ansible_facts['processor_vcpus'] >= 2
+        - ansible_facts['processor_vcpus'] >= 20
