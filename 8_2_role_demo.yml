@@ -8,7 +8,8 @@
 
   roles:
     - role: iis_role
-      site_title: Microsoft Azure Site
+      site_title: Redhat Ansible Site
+      site_subtitle: Welcome to IBM
 
   post_tasks:
     - name: Message of Post tasks
