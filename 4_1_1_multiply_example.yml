@@ -2,9 +2,6 @@
 # Test of Multiplay
 - name: First Play to publish a website
   hosts: win2.example.com
-  vars:
-    service: spooler
-    package: DHCP
   gather_facts: false
   tasks:
     - name: Install {{ package }}
