@@ -3,7 +3,7 @@
   hosts: win1.example.com
   gather_facts: false
   vars:
-    myvar: true
+    myvar: false
 
   tasks:
     - name: Include the task to install packages
