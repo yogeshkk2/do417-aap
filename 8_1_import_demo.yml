@@ -5,7 +5,7 @@
   tasks:
     - name: Include the task to install packages
       ansible.builtin.import_tasks: tasks/task1.yml
-      when: myvar is not defined
+      when: myvar is defined
       vars:
         web_packages:
           - Web-Server
