@@ -2,10 +2,13 @@
 - name: IIS Server Deployment
   hosts: win1.example.com
   gather_facts: false
+  vars:
+    myvar: true
 
   tasks:
     - name: Include the task to install packages
       ansible.builtin.import_tasks: tasks/task1.yml
+      when: myvar
       vars:
         web_packages:
           - Web-Server
