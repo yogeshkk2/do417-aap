@@ -2,16 +2,20 @@
 - name: IIS Server Deployment
   hosts: win1.example.com
   gather_facts: false
-  vars:
-    myvar: false
-
   tasks:
     - name: Include the task to install packages
       ansible.builtin.import_tasks: tasks/task1.yml
-      when: myvar
+      when: myvar is not defined
       vars:
         web_packages:
           - Web-Server
+    - name: testing 
+      ansible.builtin.set_fact:
+        myvar: true
+
+    - name: testing2
+      ansible.builtin.debug:
+        var: myvar
 
     - name: Import the task2 
       ansible.builtin.import_tasks: tasks/task2.yml
