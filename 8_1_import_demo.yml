@@ -5,18 +5,9 @@
   tasks:
     - name: Include the task to install packages
       ansible.builtin.import_tasks: tasks/task1.yml
-      when: myvar is defined
       vars:
         web_packages:
           - Web-Server
-    
-    - name: Testing conditional 
-      ansible.builtin.set_fact:
-        myvar: true
-
-    - name: Print value
-      ansible.builtin.debug:
-        var: myvar
 
     - name: Import the task2 file
       ansible.builtin.import_tasks: tasks/task2.yml
