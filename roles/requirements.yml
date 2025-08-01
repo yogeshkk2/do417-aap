@@ -1,0 +1,3 @@
+- src: https://github.com/DanielWeeber/ansible-role-windows_exporter.git
+  scm: git
+  name: exporter
