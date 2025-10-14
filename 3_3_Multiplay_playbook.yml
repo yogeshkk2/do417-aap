@@ -2,7 +2,7 @@
 # Test of Multiplay
 - name: First Play to publish a website
   hosts: win2.example.com
-  become: true
+  #become: true
   gather_facts: false
   tasks:
     - name: Install Web Service
@@ -19,7 +19,7 @@
         dest: c:\Inetpub\wwwroot\index.html
 - name: Second Play Verify website
   hosts: win1.example.com
-  become: false
+  #become: false
   gather_facts: false
   tasks:
     - name: Verify if website is working
