@@ -1,2 +1,2 @@
-#package: Web-Server
-#service: spooler
+package: Web-Server
+service: spooler
