@@ -3,6 +3,9 @@
 - name: First Play to publish a website
   hosts: IIS_WEB_SRV
   gather_facts: false
+  vars:
+    package: Web-Common-Http
+    service: spooler
   tasks:
     - name: Install {{ package }}
       ansible.windows.win_feature:
