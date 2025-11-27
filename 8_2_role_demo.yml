@@ -2,7 +2,7 @@
 - name: IIS Server Deployment
   hosts: win2.example.com
   gather_facts: false
-  tasks:
+  pre_tasks:
     - debug:
         msg: "This is the pre_tasks job that ran first"
 
