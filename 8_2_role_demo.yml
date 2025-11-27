@@ -8,8 +8,8 @@
 
   roles:
     - role: iis_role
-      site_title: Microsoft Site
-      site_subtitle: Welcome to Azure
+      site_title: OpenAI Site
+      site_subtitle: Welcome to ChatGPT
 
   post_tasks:
     - name: Message of Post tasks
