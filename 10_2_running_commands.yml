@@ -1,6 +1,6 @@
 ---
 - name: Demo of Running arbitrary commands
-  hosts: win2.example.com
+  hosts: win1.example.com
   gather_facts: false
   tasks:
     - name: Copy a powershell script to folder
