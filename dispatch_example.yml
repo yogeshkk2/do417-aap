@@ -1,0 +1,23 @@
+- name: Configure AAP
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Load all common configuration
+      ansible.builtin.include_vars:
+        dir: "config/all"
+        extensions:
+          - 'yml'
+
+    - name: Load environment-specific configuration
+      ansible.builtin.include_vars:
+        dir: "config/{{ env }}"
+        extensions:
+          - 'yml'
+      # Example: Run with `ansible-playbook playbook.yml -e "env=prod"`
+
+    - name: Run the main configuration role
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.dispatch
+      vars:
+        dispatch_include_wildcard_vars: true

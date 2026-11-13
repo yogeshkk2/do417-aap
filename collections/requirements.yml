@@ -3,3 +3,4 @@ collections:
   - name: community.windows
   - name: chocolatey.chocolatey
   - name: microsoft.ad
+  - name: infra.aap_configuration
