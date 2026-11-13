@@ -1,0 +1,17 @@
+---
+- name: Adding user to controller
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vars/auth.yml
+    - vars/users_teams.yml
+  vars:
+    user_array:
+      - "{{ system_auditors['users']} }"
+      - "{{ system_administrators['users']} }"
+      - "{{ system_no_team['users']} }"
+  tasks:
+    - name: add user with task file
+      vars:
+        the_users: "{{ user_array | flatten }}"
+      include_tasks: tasks/add_users.yml
