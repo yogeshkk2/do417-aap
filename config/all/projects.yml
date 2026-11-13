@@ -1,0 +1,5 @@
+controller_projects_all:
+  - name: Common Intranet Project
+    organization: Default
+    scm_type: git
+    scm_url: git.lab.example.com/student/playbooks.git
