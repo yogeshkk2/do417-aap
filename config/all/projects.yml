@@ -1,4 +1,4 @@
-controller_projects_all:
+controller_projects:
   - name: Common Intranet Project
     organization: Default
     scm_type: git
