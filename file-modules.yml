@@ -1,0 +1,72 @@
+---
+- name: Transfering file Modules Demonstration
+  hosts: win2.example.com
+  gather_facts: false
+  tasks:
+    - name: Create a file or modify time stamp if already present
+      ansible.windows.win_file:
+        path: C:\Users\devops\Desktop\meetings.rtf
+        state: touch
+    - name: Create a folder
+      ansible.windows.win_file:
+        path: C:\Users\devops\Desktop\minutesofmeeting
+        state: directory
+    - name: Check the information on the file if the file exists
+      ansible.windows.win_stat:
+        path: C:\Users\devops\Desktop\meetings.rtf
+      register: output
+    - name: Print results of win_stat
+      ansible.buintin.debug:
+        var: output
+    - name: Change the ownership of the directory
+      ansible.windows.win_owner:
+        path: C:\Users\devops\Desktop\minutesofmeeting
+        user: SYSTEM
+        recurse: false
+    - name: Ensure user elvis is present
+      ansible.windows.win_user:
+        name: elvis
+        password: RedHat123@!
+        state: present
+        groups:
+          - Users
+    - name: Prevent user elvis from having any access to a directory
+      ansible.windows.win_acl:
+        path: C:\Users\devops\Desktop\meetings.rtf
+        user: elvis
+        rights: Read,Write,Modify,FullControl,Delete
+        type: deny
+        state: present
+    - name: Copy a single file
+      ansible.windows.win_copy:
+        src: files/test.rtf
+        dest: C:\Users\devops\Desktop\minutesofmeeting\test.rtf
+    - name: Synchronize the contents of one directory with another
+      community.windows.win_robocopy:
+        src: C:\Users\devops\Desktop\minutesofmeeting
+        dest: C:\Windows\Temp
+        recurse: yes
+    - name: Checking the version of cmd.exe
+      community.windows.win_file_version:
+        path: C:\Windows\System32\cmd.exe
+      register: version
+    - ansible.buitin.debug:
+        var: version
+
+    - name: Transfer a Zip File 
+      ansible.windows.win_copy:
+        src: files/HelloWorld.zip
+        dest: C:\Users\devops\Desktop\minutesofmeeting\HelloWorld.zip
+
+    - name: Modifying a line in the service file
+      community.windows.win_lineinfile:
+        path: C:\Users\devops\Desktop\meetings.rtf
+        # regexp: '^# port for rdp'  # More option to look for a line #
+        # insertbefore: '^www.*8080/tcp'
+        line: '# line modified by ansible'
+
+    - name: Create an application shortcut for an executable in PATH to your desktop
+      community.windows.win_shortcut:
+        src: cmd.exe
+        dest: Desktop\Command prompt.lnk
+       
