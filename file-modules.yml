@@ -50,7 +50,7 @@
       community.windows.win_file_version:
         path: C:\Windows\System32\cmd.exe
       register: version
-    - ansible.buitin.debug:
+    - ansible.builtin.debug:
         var: version
 
     - name: Transfer a Zip File 
