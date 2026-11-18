@@ -16,7 +16,7 @@
         path: C:\Users\devops\Desktop\meetings.rtf
       register: output
     - name: Print results of win_stat
-      ansible.buintin.debug:
+      ansible.builtin.debug:
         var: output
     - name: Change the ownership of the directory
       ansible.windows.win_owner:
