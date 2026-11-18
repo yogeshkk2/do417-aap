@@ -54,8 +54,8 @@
         var: version
 
     - name: Transfer a Zip File 
-      ansible.windows.win_copy:
-        src: files/HelloWorld.zip
+      ansible.windows.win_get_url:
+        url: https://raw.githubusercontent.com/yogeshkk2/do417-aap/main/files/Helloworld.zip
         dest: C:\Users\devops\Desktop\minutesofmeeting\HelloWorld.zip
 
     - name: Modifying a line in the service file
