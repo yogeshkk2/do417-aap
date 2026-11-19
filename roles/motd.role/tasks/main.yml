@@ -1,0 +1,4 @@
+---
+- name: This is a test of role
+  ansible.builtin.debug:
+    msg: "This is a MOTD - Message of the Day"
