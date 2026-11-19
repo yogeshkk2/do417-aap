@@ -1,0 +1,48 @@
+---
+- name: Fetch files from Windows servers to AAP
+  hosts: all
+  gather_facts: false
+
+  vars:
+    local_destination: "/var/lib/ansible/fetched"
+    remote_files:
+      - 'C:\Windows\System32\drivers\etc\hosts'
+
+  tasks:
+
+    - name: Create local destination directory
+      ansible.builtin.file:
+        path: "{{ local_destination }}"
+        state: directory
+        mode: "0755"
+      delegate_to: localhost
+      run_once: true
+      become: false
+
+    - name: Check remote file existence
+      ansible.windows.win_stat:
+        path: "{{ item }}"
+      loop: "{{ remote_files }}"
+      register: remote_file_status
+
+    - name: Display missing remote files
+      ansible.builtin.debug:
+        msg: "File {{ item.item }} does not exist on {{ inventory_hostname }}"
+      loop: "{{ remote_file_status.results }}"
+      when: not item.stat.exists
+
+    - name: Fetch files from Windows servers
+      ansible.windows.win_fetch:
+        src: "{{ item.item }}"
+        dest: "{{ local_destination }}/"
+        flat: false
+      loop: "{{ remote_file_status.results }}"
+      when:
+        - item.stat.exists
+        - item.stat.isreg | default(false)
+
+      register: fetch_results
+
+    - name: Display fetch summary
+      ansible.builtin.debug:
+        msg: "File fetch completed for {{ inventory_hostname }}"
