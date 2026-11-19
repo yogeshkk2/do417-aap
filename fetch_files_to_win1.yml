@@ -1,0 +1,62 @@
+---
+- name: Fetch files from remote Windows servers
+  hosts: all
+  gather_facts: false
+
+  vars:
+    local_destination: "/tmp/aap_windows_fetch"
+
+    remote_files:
+      - 'C:\Windows\System32\drivers\etc\hosts'
+    destination_server: "win1.example.com"
+    destination_folder: 'C:\SHARE'
+
+  tasks:
+
+    # STEP 1: Create temporary directory in EE
+
+    - name: Create temporary directory
+      ansible.builtin.file:
+        path: "{{ local_destination }}"
+        state: directory
+        mode: "0755"
+      delegate_to: localhost
+      run_once: true
+      become: false
+
+    # STEP 2: Check remote file availability
+
+    - name: Check remote files
+      ansible.windows.win_stat:
+        path: "{{ item }}"
+      loop: "{{ remote_files }}"
+      register: remote_file_status
+
+    # STEP 3: Fetch files from remote Windows servers
+
+    - name: Fetch files from Windows servers
+      ansible.builtin.fetch:
+        src: "{{ item.item }}"
+        dest: "{{ local_destination }}/"
+        flat: false
+      loop: "{{ remote_file_status.results }}"
+      when:
+        - item.stat.exists
+        - item.stat.isreg | default(false)
+
+    # STEP 4: Copy fetched files to win1.example.com
+
+    - name: Transfer fetched files to destination Windows server
+      ansible.windows.win_copy:
+        src: "{{ local_destination }}/{{ inventory_hostname }}/"
+        dest: "{{ destination_folder }}\\{{ inventory_hostname }}\\"
+      delegate_to: "{{ destination_server }}"
+      vars:
+        ansible_connection: winrm
+      run_once: false
+
+    # STEP 5: Display completion message
+
+    - name: Display destination
+      ansible.builtin.debug:
+        msg: "Files from {{ inventory_hostname }} transferred to {{ destination_server }}:{{ destination_folder }}\\{{ inventory_hostname }}"
