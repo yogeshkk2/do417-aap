@@ -32,7 +32,7 @@
       when: not item.stat.exists
 
     - name: Fetch files from Windows servers
-      ansible.windows.win_fetch:
+      ansible.builtin.fetch:
         src: "{{ item.item }}"
         dest: "{{ local_destination }}/"
         flat: false
