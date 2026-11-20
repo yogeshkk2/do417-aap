@@ -3,39 +3,11 @@
   hosts: win2.example.com
   gather_facts: false
   tasks:
-    # - name: Run the WBAdmin command
-    #   ansible.windows.win_command: wbadmin -backupTarget:C:\backup\
-    #   args:
-    #     chdir: C:\Windows\Temp   # Folder from where it runs #
-    #     creates: C:\backup\
-
-    # - name: Test the availability of a server
-    #   win_shell: |
-    #     if (Test-Connection -ComputerName "win1.example.com" -Count 2 -Quiet ) {
-    #     Write-Output "[OK]"
-    #     } else {
-    #     Write-Output "[FAIL]"
-    #     }
 
     - name: Copy a PsExec keeping the filename
       ansible.windows.win_copy:
         src: files/PsExec.exe
         dest: C:\Windows\Temp\
-
-    - name: Restart IIS service firewall rule to the web servers
-      community.windows.win_psexec:
-        executable: C:\Windows\Temp\PsExec.exe
-        command: iisreset /noforce
-        hostnames:
-          - win1
-          - win2
-        elevated: yes
-        username: devops@EXAMPLE.COM
-        password: RedHat123@!
-        priority: realtime
-    # Its equivalent to running below commands:
-    # psexec \\win1 -u devops -p RedHat123@! iisreset /noforce
-    # psexec \\win2 -u devops -p RedHat123@! iisreset /noforce
 
     - name: Sample Script Run
       ansible.builtin.script: files/sample.ps1
