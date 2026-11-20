@@ -39,24 +39,3 @@
           - type: logon
         priority: 1
         state: present
-
-    - name: Current repositories are unregistered
-      win_shell: Unregister-PSRepository "{{ item }}"
-      ignore_errors: true
-      loop:
-        - PowerShell Gallery
-        - PSGallery
-
-    - name: Repository is added
-      win_psrepository:
-        source: https://www.powershellgallery.com/api/v2/
-        name: PowerShell Gallery
-        state: present
-      
-    - name: PowerShell modules are installed
-      win_psmodule:
-        name: "{{ item }}"
-        state: present
-      loop:
-        - PSWindowsUpdate
-        - Get-PSGoodFirstIssue
