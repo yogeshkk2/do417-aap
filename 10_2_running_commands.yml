@@ -47,6 +47,12 @@
         - PowerShell Gallery
         - PSGallery
 
+    - name: Ensure required NuGet package provider is installed
+      ansible.windows.win_shell: Install-PackageProvider -Name NuGet -ForceBootstrap -IncludeDependencies -Force
+
+    - name: Update PowerShellGet module to the required version
+      ansible.windows.win_shell: Install-Module -Name PowerShellGet -MinimumVersion 1.6.0 -Force -AllowClobber
+
     - name: Repository is added
       community.windows.win_psrepository:
         source: https://www.powershellgallery.com/api/v2/
