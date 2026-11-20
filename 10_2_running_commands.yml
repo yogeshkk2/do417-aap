@@ -41,29 +41,22 @@
         state: present
 
     - name: Current repositories are unregistered
-      ansible.windows.win_shell: Unregister-PSRepository "{{ item }}"
+      win_shell: Unregister-PSRepository "{{ item }}"
       ignore_errors: true
       loop:
         - PowerShell Gallery
         - PSGallery
 
-    - name: Ensure required NuGet package provider is installed
-      ansible.windows.win_shell: Install-PackageProvider -Name NuGet -ForceBootstrap -IncludeDependencies -Force
-
-    - name: Update PowerShellGet module to the required version
-      ansible.windows.win_shell: Install-Module -Name PowerShellGet -MinimumVersion 1.6.0 -Force -AllowClobber
-
     - name: Repository is added
-      community.windows.win_psrepository:
+      win_psrepository:
         source: https://www.powershellgallery.com/api/v2/
         name: PowerShell Gallery
         state: present
       
     - name: PowerShell modules are installed
-      community.windows.win_psmodule:
+      win_psmodule:
         name: "{{ item }}"
         state: present
       loop:
-        - Carbon
-        - PowerShellGet
-        - xCertificate
+        - PSWindowsUpdate
+        - Get-PSGoodFirstIssue
