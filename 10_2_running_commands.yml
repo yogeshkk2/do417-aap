@@ -30,7 +30,7 @@
           - win1
           - win2
         elevated: yes
-        username: devops
+        username: devops@EXAMPLE.COM
         password: RedHat123@!
         priority: realtime
     # Its equivalent to running below commands:
