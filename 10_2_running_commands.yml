@@ -3,57 +3,89 @@
   hosts: win2.example.com
   gather_facts: false
   tasks:
-    - name: Copy a powershell script to folder
-      ansible.windows.win_copy:
-        src: files/pingHosts.ps1
-        dest: C:\Windows\Temp\ 
-
-    - name: Running Powershell scripts
-      ansible.windows.win_powershell:
-        script: |
-          C:\Windows\Temp\pingHosts.ps1
-      register: print_cmd_output
-  
-    - name: Display results
-      debug:
-        var: print_cmd_output.output
-
-    - name: Running command module
-      ansible.windows.win_command: |
-        hostname
-      register: command_output
-  
-    - name: Display output
-      debug:
-        var: command_output.stdout_lines
-
-
     # - name: Run the WBAdmin command
-    #   ansible.windows.win_shell: wbadmin start backup -backupTarget:C:\TARGET -include:C:\BACKUP -allCritical -Quiet
+    #   ansible.windows.win_command: wbadmin -backupTarget:C:\backup\
+    #   args:
+    #     chdir: C:\Windows\Temp   # Folder from where it runs #
+    #     creates: C:\backup\
 
-    - name: Test the availability of a server
-      ansible.windows.win_shell: |
-        if (Test-Connection -ComputerName "win1.example.com" -Count 2 -Quiet ) {
-        Write-Output "[OK]"
-        } else {
-        Write-Output "[FAIL]"
-        }
+    # - name: Test the availability of a server
+    #   win_shell: |
+    #     if (Test-Connection -ComputerName "win1.example.com" -Count 2 -Quiet ) {
+    #     Write-Output "[OK]"
+    #     } else {
+    #     Write-Output "[FAIL]"
+    #     }
 
     - name: Copy a PsExec keeping the filename
       ansible.windows.win_copy:
         src: files/PsExec.exe
         dest: C:\Windows\Temp\
-    
-    # - name: Running a command over the server using psexec
-    #   ansible.windows.win_shell: >
-    #     psexec \\win1 -u devops -p D3vOps123!@ iisreset /noforce
-        
-    - name: Running a script on a remote server
+
+    - name: Restart IIS service firewall rule to the web servers
+      community.windows.win_psexec:
+        executable: C:\Windows\Temp\PsExec.exe
+        command: iisreset /noforce
+        hostnames:
+          - win1
+          - win2
+        elevated: yes
+        username: devops
+        password: RedHat123@!
+        priority: realtime
+    # Its equivalent to running below commands:
+    # psexec \\win1 -u devops -p RedHat123@! iisreset /noforce
+    # psexec \\win2 -u devops -p RedHat123@! iisreset /noforce
+
+    - name: Sample Script Run
       ansible.builtin.script: files/sample.ps1
       args:
         creates: C:\Windows\Temp\sample.log
         executable: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
 
+    - name: Copy a powershell script to folder
+      ansible.windows.win_copy:
+        src: files/pingHosts.ps1
+        dest: C:\Windows\Temp\ 
 
+    - name: A scheduled task is created
+      community.windows.win_scheduled_task:
+        name: QueryHosts
+        description: >
+          Run a PowerShell script that uses ping to reach the servers
+          in the environment
+        author: Administrator@example.com
+        enabled: true
+        hidden: true
+        actions:
+          - path: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+            arguments: >
+              -ExecutionPolicy Unrestricted
+              -NonInteractive -File C:\Windows\Temp\pingHosts.ps1
+        triggers:
+          - type: boot
+          - type: logon
+        priority: 1
+        state: present
 
+    - name: Current repositories are unregistered
+      ansible.windows.win_shell: Unregister-PSRepository "{{ item }}"
+      ignore_errors: true
+      loop:
+        - PowerShell Gallery
+        - PSGallery
 
+    - name: Repository is added
+      community.windows.win_psrepository:
+        source: https://www.powershellgallery.com/api/v2/
+        name: PowerShell Gallery
+        state: present
+      
+    - name: PowerShell modules are installed
+      community.windows.win_psmodule:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - Carbon
+        - PowerShellGet
+        - xCertificate
